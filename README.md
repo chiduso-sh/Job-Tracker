@@ -1,30 +1,66 @@
-# Job Tracker — Frontend (Week 2)
+# Job Tracker — Frontend
 
-React + Vite + Tailwind CSS + React Query frontend.
+A clean, responsive React application for tracking job applications through every stage of the hiring process.
+
+**Live demo → [job-tracker-beryl-nu.vercel.app](https://job-tracker-beryl-nu.vercel.app)**
+
+![Job Tracker Dashboard](https://img.shields.io/badge/status-live-brightgreen) ![React](https://img.shields.io/badge/React-18-61dafb?logo=react) ![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss) ![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite)
+
+---
+
+## Features
+
+- **Dashboard** — stats cards, doughnut chart by status, bar chart of applications over time, upcoming deadlines
+- **Application tracking** — add, edit, delete, and filter applications by status or search by company/role
+- **Status progress tracker** — visual pipeline from Applied → Screening → Interview → Offer
+- **Notes** — per-application notes with timestamps
+- **Deadline highlighting** — red for overdue, amber for ≤ 3 days, green otherwise
+- **CSV export** — download all your applications as a spreadsheet
+- **Reminders** — upcoming deadlines with urgency indicators
+- **Responsive** — mobile-friendly with hamburger nav and card layout on small screens
+- **JWT auth** — register, login, protected routes
+
+---
+
+## Tech stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + Vite |
+| Styling | Tailwind CSS |
+| Routing | React Router v6 |
+| Data fetching | TanStack React Query |
+| HTTP client | Axios |
+| Charts | Chart.js + react-chartjs-2 |
+| Auth | JWT (stored in localStorage) |
+
+---
 
 ## Project structure
 
 ```
 src/
-  App.jsx                        ← Router + auth provider
-  main.jsx                       ← React Query + entry point
-  index.css                      ← Tailwind + component classes
+  App.jsx                        # Router + auth provider
+  main.jsx                       # React Query + entry point
   context/
-    AuthContext.jsx              ← User state, login, logout
+    AuthContext.jsx              # User state, login, logout
   lib/
-    api.js                       ← Axios instance with JWT
-    statusConfig.js              ← Status labels and colors
+    api.js                       # Axios instance with JWT
+    statusConfig.js              # Status labels and colors
   hooks/
-    useApplications.js           ← All React Query hooks
+    useApplications.js           # All React Query hooks
   components/
-    PrivateRoute.jsx             ← Auth guard
+    PrivateRoute.jsx             # Auth guard
     layout/
-      AppLayout.jsx              ← Page wrapper
-      Navbar.jsx                 ← Navigation bar
+      AppLayout.jsx              # Page wrapper
+      Navbar.jsx                 # Responsive navigation
     ui/
-      StatusBadge.jsx            ← Colored status pill
-      Modal.jsx                  ← Reusable modal
-      ApplicationForm.jsx        ← Create/edit form
+      StatusBadge.jsx            # Colored status pill
+      StatusDoughnut.jsx         # Doughnut chart
+      ApplicationTimeline.jsx    # Bar chart
+      Modal.jsx                  # Reusable modal
+      ApplicationForm.jsx        # Create/edit form
+      ExportButton.jsx           # CSV export
   pages/
     Login.jsx
     Register.jsx
@@ -35,37 +71,45 @@ src/
     NotFound.jsx
 ```
 
-## Setup
+---
 
-### 1. Make sure the backend is running
-```powershell
-# In the backend folder
-npm run dev
-```
-Backend must be at `http://localhost:5000`.
+## Getting started
 
-### 2. Install dependencies
-```powershell
+### Prerequisites
+- Node.js 18+
+- The backend running locally or deployed (see [job-tracker-backend](https://github.com/chiduso-sh/job-tracker-backend))
+
+### Install and run
+
+```bash
+# Clone the repo
+git clone https://github.com/chiduso-sh/job-tracker-frontend.git
+cd job-tracker-frontend
+
+# Install dependencies
 npm install
-```
 
-### 3. Start the dev server
-```powershell
+# Create environment file
+cp .env.example .env
+# Set VITE_API_URL to your backend URL
+
+# Start dev server
 npm run dev
 ```
 
-Frontend runs at `http://localhost:5173`
+Open [http://localhost:5173](http://localhost:5173)
 
-The Vite proxy forwards all `/api` requests to `http://localhost:5000`,
-so no CORS issues in development.
+### Environment variables
 
-## Pages
+```env
+VITE_API_URL=https://your-backend-url.up.railway.app
+```
 
-| Route | Page | Auth |
-|-------|------|------|
-| /login | Login | No |
-| /register | Register | No |
-| / | Dashboard | Yes |
-| /applications | Applications list | Yes |
-| /applications/:id | Application detail + notes | Yes |
-| /reminders | Upcoming deadlines | Yes |
+In development, leave this empty — the Vite proxy forwards `/api` to `localhost:5000` automatically.
+
+---
+
+## Related
+
+- **Backend repo** → [github.com/chiduso-sh/job-tracker-backend](https://github.com/chiduso-sh/job-tracker-backend)
+- **Live API** → [job-tracker-production-7b5c.up.railway.app](https://job-tracker-production-7b5c.up.railway.app)
